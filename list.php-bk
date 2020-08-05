@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head><title>顯示資料</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+   <?php
+       //偵錯
+       //error_reporting(E_ALL);
+       //ini_set('display_errors', 1);
+
+       $servername = "192.168.133.65";
+       $username = "root";
+       $password = "!Q2w3e4R";
+
+       $conn = new mysqli($servername, $username, $password);
+
+ 
+       $sql="SELECT * FROM message.msg";
+       $result = mysqli_query($conn, $sql);
+
+       //while shoe data
+       echo "<table width=400 border=1>";
+     
+          while($bb=mysqli_fetch_array($result, MYSQLI_NUM)){
+           echo "<tr><td>$bb[0]"." 留言 : "."$bb[1]</td></tr>";
+          }
+       echo "</table>";
+       //關閉連線
+       mysqli_close($conn);
+       
+   ?>
+   <input type="button" name="Submit" value="返回" class="btn" onclick="location.href='message.php'" />
+</body>
+</html>
