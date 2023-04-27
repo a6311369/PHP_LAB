@@ -77,8 +77,15 @@ switch ($option) {
         $stmt = $conn->prepare('SELECT * FROM myTable ORDER BY age');
         break;
     case 'address':
-        $stmt = $conn->prepare('SELECT
+        $stmt = $conn->prepare('SELECT 
 
+FROM myTable ORDER BY address');
+break;
+}
+$stmt->execute();
+$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+echo json_encode($results);
+?>
 
 
 
