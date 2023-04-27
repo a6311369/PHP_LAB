@@ -1,0 +1,87 @@
+Open sidebar
+PHP Datatables Search.
+
+
+林于竣
+php使用動態下拉選單來搜尋資料，並搭配datatables套件顯示
+
+要使用PHP搭配動態下拉選單來搜尋資料並使用Datatables套件顯示，可以按照以下步驟進行：
+
+前端設計：
+首先，建立一個HTML表單，其中包括一個下拉選單和一個Datatables表格，以及一個JavaScript腳本。
+下拉選單的每個選項都對應一個查詢條件，當用戶選擇一個選項時，JavaScript會根據該選項的值向後端發送請求，並將返回的資料填入Datatables表格中。
+後端處理：
+在後端，首先建立一個資料庫連接，然後寫一個PHP腳本來處理用戶提交的查詢請求。
+在這個PHP腳本中，使用switch語句根據用戶選擇的查詢條件來構建不同的SQL查詢語句，並使用PDO或mysqli等PHP資料庫連接程式庫來執行查詢。
+最後，將查詢結果轉換為JSON格式，並將其返回給前端JavaScript處理。
+以下是一個簡單的範例，展示了如何使用PHP、MySQL、jQuery和Datatables套件來實現動態下拉選單搜尋：
+
+HTML：
+
+html
+Copy code
+<form>
+    <select id="searchOption">
+        <option value="name">Name</option>
+        <option value="age">Age</option>
+        <option value="address">Address</option>
+    </select>
+</form>
+<table id="dataTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Address</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+JavaScript：
+
+javascript
+Copy code
+$(document).ready(function() {
+    $('#searchOption').change(function() {
+        var option = $(this).val();
+        $.ajax({
+            url: 'search.php',
+            type: 'POST',
+            data: {option: option},
+            dataType: 'json',
+            success: function(data) {
+                $('#dataTable').DataTable({
+                    data: data,
+                    columns: [
+                        {data: 'name'},
+                        {data: 'age'},
+                        {data: 'address'}
+                    ]
+                });
+            }
+        });
+    });
+});
+PHP：
+
+php
+Copy code
+<?php
+$option = $_POST['option'];
+$conn = new PDO('mysql:host=localhost;dbname=myDatabase', 'username', 'password');
+switch ($option) {
+    case 'name':
+        $stmt = $conn->prepare('SELECT * FROM myTable ORDER BY name');
+        break;
+    case 'age':
+        $stmt = $conn->prepare('SELECT * FROM myTable ORDER BY age');
+        break;
+    case 'address':
+        $stmt = $conn->prepare('SELECT
+
+
+
+
+
+
+Free Research Preview. ChatGPT may produce inaccurate information about people, places, or facts. ChatGPT Mar 23 Version
